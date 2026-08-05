@@ -1,0 +1,50 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/.well-known/openid-configuration
+docs: https://shopify.dev/docs/api/customer
+note: >-
+  Derived from the live OIDC / RFC 8414 discovery documents served at liveouter.com, not from
+  an OpenAPI (Outer publishes none). The authorization server is Shopify's Customer Account
+  API issuer for shop id 11846615098, fronted on Outer's own account.liveouter.com host.
+  The UCP MCP endpoint at /api/ucp/mcp uses a different gate: it requires a resolvable UCP
+  agent profile URI rather than an OAuth token, and buyer payment approval on top.
+summary:
+  types: [oauth2, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, refreshToken, jwtBearer]
+  pkce: [S256]
+schemes:
+- name: ShopifyCustomerAccount
+  type: openIdConnect
+  openIdConnectUrl: https://liveouter.com/.well-known/openid-configuration
+  issuer: https://shopify.com/authentication/11846615098
+  authorizationUrl: https://account.liveouter.com/authentication/oauth/authorize
+  tokenUrl: https://account.liveouter.com/authentication/oauth/token
+  endSessionUrl: https://account.liveouter.com/authentication/logout
+  jwksUri: https://account.liveouter.com/authentication/.well-known/jwks.json
+  response_types_supported: [code]
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+  token_endpoint_auth_methods_supported: [client_secret_basic]
+  code_challenge_methods_supported: [S256]
+  id_token_signing_alg_values_supported: [RS256]
+  subject_types_supported: [public]
+  claims_supported: [iss, sub, aud, exp, iat, nonce, sid, email, email_verified]
+  sources:
+  - well-known/outer-openid-configuration.json
+  - well-known/outer-oauth-authorization-server.json
+agent_surface:
+  endpoint: https://liveouter.com/api/ucp/mcp
+  gate: UCP agent profile URI (HTTP 422 invalid_profile_url without one)
+  human_in_the_loop: required for complete_checkout (buyer must approve payment)
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://liveouter.com/.well-known/openid-configuration
+    http_status: 200
+  - url: https://liveouter.com/.well-known/oauth-authorization-server
+    http_status: 200
+  - url: https://account.liveouter.com/authentication/.well-known/jwks.json
+    http_status: 200

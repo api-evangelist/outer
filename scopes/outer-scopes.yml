@@ -1,0 +1,39 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/.well-known/openid-configuration
+docs: https://shopify.dev/docs/api/customer
+note: >-
+  Scopes taken verbatim from scopes_supported in the live discovery document served at
+  liveouter.com. There is no OpenAPI to derive from; descriptions below describe what each
+  scope name denotes in the Shopify Customer Account API and are not additional scopes.
+schemes:
+- name: ShopifyCustomerAccount
+  source: well-known/outer-openid-configuration.json
+  issuer: https://shopify.com/authentication/11846615098
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://account.liveouter.com/authentication/oauth/authorize
+    tokenUrl: https://account.liveouter.com/authentication/oauth/token
+    pkce: S256
+scopes:
+- scope: openid
+  description: OpenID Connect authentication; issues an ID token for the signed-in customer.
+  flows: [authorizationCode]
+  sources: [well-known/outer-openid-configuration.json]
+- scope: email
+  description: Access to the customer's email address and email_verified claim.
+  flows: [authorizationCode]
+  sources: [well-known/outer-openid-configuration.json]
+- scope: customer-account-api:full
+  description: Full access to the Shopify Customer Account API on behalf of the signed-in customer.
+  flows: [authorizationCode]
+  sources: [well-known/outer-openid-configuration.json]
+- scope: customer-account-mcp-api:full
+  description: Full access to the customer-account MCP API on behalf of the signed-in customer.
+  flows: [authorizationCode]
+  sources: [well-known/outer-openid-configuration.json]
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://liveouter.com/.well-known/openid-configuration
+    http_status: 200

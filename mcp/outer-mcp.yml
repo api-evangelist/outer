@@ -1,0 +1,91 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://liveouter.com/llms.txt
+discovery: https://liveouter.com/.well-known/ucp
+server:
+  name: outer-ucp-shopping
+  transport: http
+  protocol: MCP over HTTP (JSON-RPC 2.0)
+  url: https://liveouter.com/api/ucp/mcp
+  canonical_url: https://live-outer.myshopify.com/api/ucp/mcp
+  service: dev.ucp.shopping
+  spec: https://ucp.dev/2026-04-08/specification/overview/
+  schema: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  versions:
+  - '2026-04-08'
+  - '2026-01-23'
+introspection:
+  attempted: true
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 422
+  error_code: -32001
+  error: 'UCP discovery failed / invalid_profile_url — "Unable to fetch agent profile: Missing profile uri"'
+  gated: true
+  note: >-
+    tools/list is not anonymous. The endpoint requires the calling agent to present a
+    resolvable UCP agent profile URI before it will enumerate tools, so live inputSchema
+    values could not be captured without registering an agent identity. The tools below are
+    recorded from the names Outer publishes in its own /llms.txt and from the capabilities
+    declared in /.well-known/ucp — names and purposes only, NOT schemas.
+tools:
+- name: search_catalog
+  description: Find products in the store matching a buyer's intent.
+  capability: dev.ucp.shopping.catalog.search
+  schema: https://ucp.dev/2026-04-08/schemas/shopping/catalog_search.json
+  source: https://liveouter.com/llms.txt
+- name: create_cart
+  description: Create a cart and add the desired items.
+  capability: dev.ucp.shopping.cart
+  schema: https://ucp.dev/2026-04-08/schemas/shopping/cart.json
+  source: https://liveouter.com/llms.txt
+- name: create_checkout
+  description: Start the purchase flow from a cart.
+  capability: dev.ucp.shopping.checkout
+  schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+  source: https://liveouter.com/llms.txt
+- name: update_checkout
+  description: Set the shipping address and shipping method on a checkout.
+  capability: dev.ucp.shopping.fulfillment
+  schema: https://ucp.dev/2026-04-08/schemas/shopping/fulfillment.json
+  source: https://liveouter.com/llms.txt
+- name: complete_checkout
+  description: Finalize the purchase. The buyer must explicitly approve payment.
+  capability: dev.ucp.shopping.checkout
+  schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+  source: https://liveouter.com/llms.txt
+declared_capabilities:
+- dev.ucp.shopping.catalog.search
+- dev.ucp.shopping.catalog.lookup
+- dev.ucp.shopping.cart
+- dev.ucp.shopping.checkout
+- dev.ucp.shopping.fulfillment
+- dev.ucp.shopping.discount
+- dev.ucp.shopping.order
+- dev.shopify.catalog
+payment_handlers:
+- id: gpay
+  handler: com.google.pay
+  version: '2026-01-11'
+- id: shopify.card
+  handler: dev.shopify.card
+  version: '2026-01-15'
+  card_brands: [visa, master, american_express, discover, diners_club]
+- id: shop_pay
+  handler: dev.shopify.shop_pay
+  version: '2026-04-08'
+constraints:
+- Checkout requires contemporaneous human approval; agents must not complete payment without explicit buyer consent.
+- The MCP endpoint is rate-limited per IP; agents must back off on HTTP 429.
+- Agents should pass context.address_country and context.currency for accurate pricing and availability.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://liveouter.com/.well-known/ucp
+    http_status: 200
+  - url: https://liveouter.com/api/ucp/mcp
+    http_status: 422
+  - url: https://live-outer.myshopify.com/api/ucp/mcp
+    http_status: 422
+  - url: https://liveouter.com/llms.txt
+    http_status: 200

@@ -1,0 +1,79 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/llms.txt
+also: https://liveouter.com/.well-known/ucp
+note: >-
+  Cross-cutting semantics for the agent-facing surface Outer's storefront serves. Captured
+  from the provider's own /llms.txt, /agents.md and UCP merchant profile. There is no
+  OpenAPI to derive from.
+authentication:
+  style: OAuth 2.0 / OpenID Connect for customer accounts; UCP agent profile URI for the MCP endpoint
+  detail: authentication/outer-authentication.yml
+idempotency:
+  supported: unknown
+  note: >-
+    Outer publishes no idempotency-key contract, and the gated MCP tools/list could not be
+    introspected to check for one. Recorded as unknown rather than false, and deliberately
+    NOT wired as a type: Idempotency pointer.
+pagination:
+  style: unknown for the MCP surface
+  storefront:
+    endpoints:
+    - GET /collections/{handle}/products.json
+    - GET /search?q={query}&type=product
+    note: Shopify storefront JSON endpoints paginate with ?page= and ?limit=; not documented by Outer itself.
+versioning:
+  scheme: dated protocol version
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  negotiation: >-
+    Version-specific profiles are published at
+    https://live-outer.myshopify.com/.well-known/ucp/{version}
+  detail: lifecycle/outer-lifecycle.yml
+error_envelope:
+  shape: JSON-RPC 2.0 error object
+  fields: [jsonrpc, id, error.code, error.message, error.data]
+  observed:
+    code: -32001
+    message: UCP discovery failed
+    data: {code: invalid_profile_url, continue_url: 'https://live-outer.myshopify.com/'}
+  http_status_observed: 422
+  rfc9457: false
+rate_limiting:
+  documented: true
+  scope: per IP on the MCP endpoint
+  signal: HTTP 429
+  guidance: 'Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses.'
+  source: https://liveouter.com/llms.txt
+buyer_context:
+  documented: true
+  params: [context.address_country, context.currency]
+  guidance: Pass buyer context for accurate pricing and availability.
+human_in_the_loop:
+  required: true
+  rule: >-
+    "Checkout requires human approval. Agents must not complete payment without explicit buyer
+    consent." Agents without contemporaneous buyer approval are directed to route the purchase
+    through Shop Pay via https://shop.app/SKILL.md.
+read_only_surface:
+  auth_required: false
+  endpoints:
+  - GET /collections/all
+  - GET /products/{handle}
+  - GET /products/{handle}.json
+  - GET /collections/{handle}
+  - GET /collections/{handle}/products.json
+  - GET /search?q={query}&type=product
+  - GET /sitemap.xml
+  verified:
+  - url: https://liveouter.com/products.json
+    http_status: 200
+    content_type: application/json
+  - url: https://liveouter.com/sitemap.xml
+    http_status: 200
+cross_links:
+  authentication: authentication/outer-authentication.yml
+  scopes: scopes/outer-scopes.yml
+  lifecycle: lifecycle/outer-lifecycle.yml
+  mcp: mcp/outer-mcp.yml
+  conformance: conformance/outer-conformance.yml

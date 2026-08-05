@@ -1,0 +1,54 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/.well-known/
+host: https://liveouter.com
+note: >-
+  Outer's storefront runs on Shopify, so the /.well-known/ surface below is served by the
+  Shopify platform on Outer's own apex host. The documents are real and anonymously
+  fetchable at liveouter.com; they are not a first-party Outer developer program.
+documents:
+- path: /.well-known/ucp
+  description: Universal Commerce Protocol merchant profile (UCP 2026-04-08)
+  status: 200
+  content_type: application/json
+  file: outer-ucp.json
+- path: /.well-known/openid-configuration
+  description: OpenID Connect discovery for the Shopify Customer Account API
+  status: 200
+  content_type: application/json
+  file: outer-openid-configuration.json
+- path: /.well-known/oauth-authorization-server
+  description: RFC 8414 authorization server metadata (byte-identical to the OIDC document)
+  status: 200
+  content_type: application/json
+  file: outer-oauth-authorization-server.json
+- path: /.well-known/security.txt
+  description: RFC 9116 security contact
+  status: 404
+- path: /.well-known/api-catalog
+  description: RFC 9727 API catalog
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/agent-card.json
+  description: A2A agent card (canonical path)
+  status: 404
+- path: /.well-known/agent.json
+  description: A2A agent card (pre-0.3 legacy path)
+  status: 404
+other_hosts:
+- host: https://account.liveouter.com
+  documents:
+  - path: /authentication/.well-known/jwks.json
+    description: JWKS for the Customer Account API issuer
+    status: 200
+    content_type: application/json
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-04'
+  probed_hosts:
+  - liveouter.com
+  - account.liveouter.com

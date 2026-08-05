@@ -1,0 +1,67 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/.well-known/ucp
+note: >-
+  Standards asserted from live anonymous probes of liveouter.com. No compliance program,
+  certification or trust center is published by Outer, so no type: Compliance pointer is
+  emitted.
+standards:
+- id: ucp
+  name: Universal Commerce Protocol
+  conforms: true
+  version: '2026-04-08'
+  evidence: '/.well-known/ucp returned 200 with a full UCP merchant profile declaring dev.ucp.shopping services and capabilities'
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: 'UCP shopping service declares transport: mcp at https://liveouter.com/api/ucp/mcp; endpoint answers JSON-RPC 2.0'
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: '/.well-known/oauth-authorization-server returned RFC 8414 metadata with authorization_code, refresh_token and jwt-bearer grants'
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: '/.well-known/oauth-authorization-server returned 200 application/json'
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: '/.well-known/openid-configuration returned 200 with issuer, jwks_uri, RS256 id_token signing and standard claims'
+- id: pkce
+  name: 'RFC 7636 PKCE'
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: '/llms.txt returned 200 text/markdown with agent instructions'
+- id: agents-md
+  name: AGENTS.md / agents.md agent instructions
+  conforms: true
+  evidence: '/agents.md returned 200 text/markdown; declared the canonical agent-facing description of the store'
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: 'no spec at /openapi.json (404), /openapi.yaml (404), /swagger.json (404), /api-docs (404), /docs (404) on liveouter.com'
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: '/.well-known/agent-card.json and /.well-known/agent.json both 404 on liveouter.com and account.liveouter.com'
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: MCP errors use the JSON-RPC 2.0 error object, not application/problem+json
+- id: rfc9116
+  name: 'RFC 9116 security.txt'
+  conforms: false
+  evidence: '/.well-known/security.txt returned 404'
+- id: rfc9727
+  name: 'RFC 9727 /.well-known/api-catalog'
+  conforms: false
+  evidence: '/.well-known/api-catalog returned 404'
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: no published event, streaming or webhook surface found for Outer's own storefront
+x-evidence:
+  fetched: '2026-08-04'

@@ -1,0 +1,41 @@
+generated: '2026-08-04'
+method: searched
+source: https://liveouter.com/.well-known/ucp
+versioning:
+  scheme: dated protocol version (UCP)
+  current: '2026-04-08'
+  supported:
+  - version: '2026-04-08'
+    label: latest stable
+    profile: https://live-outer.myshopify.com/.well-known/ucp/2026-04-08
+  - version: '2026-01-23'
+    profile: https://live-outer.myshopify.com/.well-known/ucp/2026-01-23
+  docs: https://ucp.dev/2026-04-08/specification/overview/
+  note: >-
+    Version negotiation is inherited from the UCP/Shopify platform. Outer itself publishes no
+    versioning policy of its own.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation or Sunset/Deprecation (RFC 8594) policy is published by Outer. The only
+    observable lifecycle signal is that the older UCP profile 2026-01-23 is still advertised
+    alongside 2026-04-08. No type: Deprecation pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    Outer publishes no status page. The underlying platform status page
+    (https://www.shopifystatus.com/) belongs to Shopify, not to Outer, so no type: StatusPage
+    pointer is emitted.
+changelog:
+  url: null
+  note: No dated API/agent changelog is published by Outer.
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://liveouter.com/.well-known/ucp
+    http_status: 200
