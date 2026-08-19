@@ -17,17 +17,17 @@ server:
   - '2026-01-23'
 introspection:
   attempted: true
-  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
   http_status: 422
   error_code: -32001
-  error: 'UCP discovery failed / invalid_profile_url — "Unable to fetch agent profile: Missing profile uri"'
+  error: 'UCP discovery failed / invalid_profile_url — "Unable to fetch agent profile: Missing profile
+    uri"'
   gated: true
-  note: >-
-    tools/list is not anonymous. The endpoint requires the calling agent to present a
-    resolvable UCP agent profile URI before it will enumerate tools, so live inputSchema
-    values could not be captured without registering an agent identity. The tools below are
-    recorded from the names Outer publishes in its own /llms.txt and from the capabilities
-    declared in /.well-known/ucp — names and purposes only, NOT schemas.
+  note: tools/list is not anonymous. The endpoint requires the calling agent to present a resolvable UCP
+    agent profile URI before it will enumerate tools, so live inputSchema values could not be captured
+    without registering an agent identity. The tools below are recorded from the names Outer publishes
+    in its own /llms.txt and from the capabilities declared in /.well-known/ucp — names and purposes only,
+    NOT schemas.
 tools:
 - name: search_catalog
   description: Find products in the store matching a buyer's intent.
@@ -70,12 +70,18 @@ payment_handlers:
 - id: shopify.card
   handler: dev.shopify.card
   version: '2026-01-15'
-  card_brands: [visa, master, american_express, discover, diners_club]
+  card_brands:
+  - visa
+  - master
+  - american_express
+  - discover
+  - diners_club
 - id: shop_pay
   handler: dev.shopify.shop_pay
   version: '2026-04-08'
 constraints:
-- Checkout requires contemporaneous human approval; agents must not complete payment without explicit buyer consent.
+- Checkout requires contemporaneous human approval; agents must not complete payment without explicit
+  buyer consent.
 - The MCP endpoint is rate-limited per IP; agents must back off on HTTP 429.
 - Agents should pass context.address_country and context.currency for accurate pricing and availability.
 x-evidence:
@@ -89,3 +95,11 @@ x-evidence:
     http_status: 422
   - url: https://liveouter.com/llms.txt
     http_status: 200
+deployment:
+  mode: remote
+  endpoint: https://liveouter.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
