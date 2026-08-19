@@ -5,7 +5,7 @@ url: https://raw.githubusercontent.com/api-evangelist/outer/refs/heads/main/apis
 image: https://liveouter.com/cdn/shop/files/outer-hero-banner-aluminum_513ea457-357e-47e1-9e01-8e84b8b4fd29.png?v=1769763708&width=2048
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
