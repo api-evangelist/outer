@@ -2,6 +2,17 @@ aid: outer
 name: Outer
 description: 'Outer is a direct-to-consumer outdoor furniture brand founded in 2017 by Jiake Liu and Terry Lin and headquartered in Santa Monica, California, known for its OuterShell built-in cushion cover, OuterWeave wicker and OuterCloud cushions, and for the Neighborhood Showroom program that turns customer backyards into showrooms. Outer publishes no traditional developer program and no OpenAPI, but its Shopify-hosted storefront at liveouter.com serves a real machine-readable agent surface: an /llms.txt and /agents.md agent instruction document, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp advertising catalog search, cart, checkout, fulfillment, discount and order capabilities, a UCP MCP endpoint at /api/ucp/mcp, and OAuth 2.0 / OpenID Connect discovery documents for the Shopify Customer Account API.'
 url: https://raw.githubusercontent.com/api-evangelist/outer/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://liveouter.com/cdn/shop/files/outer-hero-banner-aluminum_513ea457-357e-47e1-9e01-8e84b8b4fd29.png?v=1769763708&width=2048
 x-type: company
 x-source: harvest:secondary-market
